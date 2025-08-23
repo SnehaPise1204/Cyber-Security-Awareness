@@ -11,6 +11,12 @@
   font-weight: lighter;
 }
 
+.btndiv{
+  display: flex;
+  margin: 0%;
+  padding: 0%;
+}
+
 .hero div{
   max-width: 500px;
   text-align: left;
@@ -213,11 +219,12 @@ button:hover {
   font-size: 15px;
 }
 
+/* Responsive */
 
 @media (max-width: 1024px) {
   .hero {
     padding-left: 40px;
-    background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzARqothu0Gosp5bkgxIFItnolutH_oHnUZA&s) no-repeat center,linear-gradient(to bottom, #00000087,#000000be);
+    background: url(https://static.vecteezy.com/system/resources/previews/008/740/851/non_2x/team-of-business-people-working-together-in-the-meeting-room-office-teamwork-background-charts-and-graphs-banner-double-exposure-successful-teamwork-business-planning-concept-free-photo.jpg) no-repeat center,linear-gradient(to bottom, #0000009d,#000000d5);
     background-blend-mode: color;
     background-size: cover;
   }
@@ -256,7 +263,7 @@ button:hover {
   .hero {
     justify-content: center;
     text-align: center;
-    height: 70vh;
+    height: 70vh; 
   }
   .hero div {
     max-width: 90%;
@@ -302,5 +309,11 @@ button:hover {
   }
   .contact-container h2 {
     font-size: 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero div h3{
+    color: #d6d6d6;
   }
 }

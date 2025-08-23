@@ -96,3 +96,68 @@
 .card a:hover {
   background: #005fcc;
 }
+
+
+@media (max-width: 768px) {
+  .card {
+    padding: 14px;
+  }
+  
+  .navbar-buttons button {
+    font-size: 15px;
+    width: auto;
+  }
+
+  .card h3 {
+    font-size: 13px;
+    margin-bottom: 9px;
+  }
+  
+  .card a {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 0.8rem;
+  }
+  
+  .navbar-buttons button {
+    font-size: 12px;
+    width: auto;
+  }
+
+  .page-title {
+    margin-top: 60px;
+    font-size: 25px;
+  }
+
+  .card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar-buttons button {
+    padding:9px 13px;
+    font-size: 13px;
+    width: auto;
+  }
+}
+
+
+/* General responsive adjustments */
+@media (max-width: 1024px) {
+  .courses-container {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .courses-container {
+    padding: 0 10px;
+  }
+}

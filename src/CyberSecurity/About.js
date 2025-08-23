@@ -15,8 +15,10 @@ function About() {
             <h3>
               We help people and organizations stay safe online by providing clear guidance, practical tools, and the skills to prevent cyber threats — making digital security simple and effective for everyone
             </h3>
-            <button className="intoBtn" onClick={() => navTo("/")}>Go to Home</button>
-            <button className="intoBtn" onClick={() => navTo("/contact")}>Contact us</button>
+            <div className="btndiv">
+              <button className="intoBtn" onClick={() => navTo("/")}>Go to Home</button>
+              <button className="intoBtn" onClick={() => navTo("/contact")}>Contact us</button>
+            </div>
           </div>
         </FadeInSection>
       </div>

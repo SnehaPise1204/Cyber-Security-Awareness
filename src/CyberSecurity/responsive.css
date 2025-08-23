@@ -1,0 +1,162 @@
+@media (max-width: 1024px) {
+  .intro {
+    background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4nrQLHXY1eNXBuL3j-GllHFWm5TIltLea1Q&s) no-repeat center,#0200128e;
+    background-size: cover;
+    background-blend-mode: color;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #searchBox{
+   margin-left: 160px;
+   width: 350px;
+  }
+
+  .WhatIsCyberSecurity,
+  .Mission {
+    padding: 50px 40px;
+    justify-content: center;
+  }
+  .WhatIsCyberSecurity img {
+    
+    width: 100%;
+    max-width: 400px;
+    height: 360px;
+  }
+
+  .Mission img {
+    
+    width: 100%;
+    width: 2000px;
+    height: auto;
+  }
+
+  .features-container {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px;
+    max-width: 100%;
+    padding: 0 15px;
+  }
+
+  .feature-card {
+    max-width: 100%;
+    padding: 25px 15px;
+  }
+
+}
+
+
+
+
+@media (max-width: 912px) {
+  .intro{
+    max-height: 70vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0px;
+  }
+
+  #searchBox{
+   margin-left: 90px;
+  }
+
+  .IntroDescription {
+    text-align: center;
+    max-width: 700px;
+    max-height: 100%;
+    margin-bottom: 10px;
+  }
+
+  .Mission ,.WhatIsCyberSecurity{
+    flex-direction: column;
+  }
+
+  .WhatIsCyberSecurity img {
+    width: 100%;
+    width: 400px;
+    height: auto;
+  }
+
+  .Mission img{display: none;}
+
+
+  
+  .features-container {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 15px;
+    max-width: 100%;
+    padding: 10px 10px;
+    
+  }
+}
+
+@media (max-width: 768px) {
+  header img {
+    width: 140px;
+    height: auto;
+    padding-left: 10px;
+  }
+
+  .nav-links {
+    gap: 10px;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+  }
+
+  .nav-links a {
+    color: #d5d5d5;
+    font-size: 14px;
+  }
+
+  #searchBox {
+    display: none;
+  }
+
+  .IntroDescription h1 {
+    font-size: 26px;
+  }
+
+  .IntroDescription h2 {
+    font-size: 18px;
+  }
+
+  .intoBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .WhatIsCyberSecurity,
+  .Mission {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .WhatIsCyberSecurity img{
+    max-width: 80vw;
+    height: auto;
+  }
+
+  .features-container {
+  display: flex;                  
+  gap: 15px;                      
+  overflow-x: auto;               
+  scroll-snap-type: x mandatory;  
+  padding: 10px;
+}
+
+.feature-card {
+  flex: 0 0 auto;  
+  height: 30vh;
+  width: 80vw;
+  scroll-snap-align: start;
+  text-align: center;
+}
+
+  .info1 div {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+
+

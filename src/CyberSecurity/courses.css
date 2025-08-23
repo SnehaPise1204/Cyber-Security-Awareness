@@ -1,0 +1,98 @@
+/* Container */
+.courses-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2px;
+  font-family: "Hind", sans-serif;
+  color: #1a1a1a;
+}
+
+/* Titles */
+.page-title {
+  font-size: 40px;
+  font-weight: bold;
+  color: #143076;
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 10px;
+}
+
+
+/* Navbar buttons */
+.navbar-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.navbar-buttons button {
+  padding:9px 20px;
+  width: 25vw;
+  background: transparent;
+  color: #212121;
+  border-radius: 0px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.navbar-buttons button:hover {
+  background: rgb(47, 144, 255);
+  color: white;
+}
+
+.navbar-buttons button.active {
+  background: white;
+  color: #005fcc;
+  border-bottom:3px solid #0077ff;
+  box-shadow: 0px 4px 12px rgba(0, 119, 255, 0.3);
+}
+
+/* Cards grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card styling */
+.card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: #0077ff;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.25s ease-in-out;
+}
+
+.card a:hover {
+  background: #005fcc;
+}

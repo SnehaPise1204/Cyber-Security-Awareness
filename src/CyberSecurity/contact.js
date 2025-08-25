@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
+import {useNavigate } from 'react-router-dom';
 import "./about.css";
 import db from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 
 function Contact() {
+  const navTo=useNavigate()
   const Name = useRef();
   const Email = useRef();
   const Message = useRef();
@@ -31,6 +33,7 @@ function Contact() {
   };
 
   return (
+    <>
     <div className="Contact">
       <div className="contact-container">
         <h2>Contact Us</h2>
@@ -71,7 +74,34 @@ function Contact() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+            <div className='footer'>
+          <div>
+            <img src={require('../requiredIMG/cyber.png')} id='logo1' alt="Cyber Security" />
+            <p>A cybersecurity awareness platform that educates and empowers users<br/> to stay safe online</p>
+          </div>
+          <div>
+            <h3>Our policy to provide</h3>
+            <p>information About Cybersecurity</p>
+            <p>Cybersecurity Best Practices</p>
+            <p>Latest Security Updates</p>
+            <p>Free Learning Resources</p>
+          </div>
+          <div className='link'>
+            <h3>important links</h3>
+            <p onClick={() => navTo("/")}>Home</p>
+            <p onClick={() => navTo("/About")}>About</p>
+            <p onClick={() => navTo("/courses")}>Courses</p>
+            <p onClick={() => navTo("/contact")}>Contact</p>
+          </div>
+          <div>
+            <h3>Address</h3>
+            <p>CyberSafe Solutions 123, Cyber Tower,<br/> Baner-Pashan Link Road, Pune, Maharashtra 411045, India</p>
+            <p><b>Email:</b>info@cybersafe.com</p>
+            <p><b>Phone</b>+91 78220 10159</p>
+          </div>
+        </div>
+    </>
   );
 }
 

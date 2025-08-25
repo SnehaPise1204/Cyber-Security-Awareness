@@ -86,13 +86,32 @@ function About() {
         />
       </div>
 
-      <div className="contact">
-        <div className="contactContainer">
-          <h2>Get in Touch</h2>
-          <p>Have questions or need support? Reach out to us and we'll respond promptly.</p>
-          <a href="/contact" className="button">Contact Us</a>
+            <div className='footer'>
+          <div>
+            <img src={require('../requiredIMG/cyber.png')} id='logo1' alt="Cyber Security" />
+            <p>A cybersecurity awareness platform that educates and empowers users<br/> to stay safe online</p>
+          </div>
+          <div>
+            <h3>Our policy to provide</h3>
+            <p>information About Cybersecurity</p>
+            <p>Cybersecurity Best Practices</p>
+            <p>Latest Security Updates</p>
+            <p>Free Learning Resources</p>
+          </div>
+          <div className='link'>
+            <h3>important links</h3>
+            <p onClick={() => navTo("/")}>Home</p>
+            <p onClick={() => navTo("/About")}>About</p>
+            <p onClick={() => navTo("/courses")}>Courses</p>
+            <p onClick={() => navTo("/contact")}>Contact</p>
+          </div>
+          <div>
+            <h3>Address</h3>
+            <p>CyberSafe Solutions 123, Cyber Tower,<br/> Baner-Pashan Link Road, Pune, Maharashtra 411045, India</p>
+            <p><b>Email:</b>info@cybersafe.com</p>
+            <p><b>Phone</b>+91 78220 10159</p>
+          </div>
         </div>
-      </div>
     </>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 
 import db from "../firebase";
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs,doc,setDoc } from 'firebase/firestore';
 
 import About from "./About";
 import Contact from "./contact";
@@ -12,15 +12,48 @@ import "./responsive.css";
 import FadeInSection from "./fadeIn";
 
 // ------------------- Animated Numbers -------------------
-function ChangeNumbers({ children }) {
+
+ 
+
+
+function ChangeNumbers() {
   const ref = useRef();
   const [isVisible, setVisible] = useState(false);
+
+  // Animated values
   const [videos, setVideos] = useState(0);
   const [articles, setArticles] = useState(0);
   const [podcasts, setPodcasts] = useState(0);
   const [ebooks, setEbooks] = useState(0);
-  
 
+  // Final target values from Firestore
+  const [target, setTarget] = useState({
+    videos: 0,
+    articles: 0,
+    podcasts: 0,
+    ebooks: 0,
+  });
+
+  // Fetch counts once from Firestore
+  useEffect(() => {
+    const fetchCounts = async () => {
+      const videosSnap = await getDocs(collection(db, "Videos"));   
+      const articlesSnap = await getDocs(collection(db, "Articles")); 
+      const podcastsSnap = await getDocs(collection(db, "podcasts")); 
+      const ebooksSnap = await getDocs(collection(db, "eBooks")); 
+
+      setTarget({
+        videos: videosSnap.size,
+        articles: articlesSnap.size,
+        podcasts: podcastsSnap.size,
+        ebooks: ebooksSnap.size,
+      });
+    };
+
+    fetchCounts();
+  }, []);
+
+  // Observer to trigger animation
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => setVisible(entry.isIntersecting));
@@ -29,18 +62,22 @@ function ChangeNumbers({ children }) {
     return () => observer.disconnect();
   }, []);
 
+  // Animate numbers just like your code
   useEffect(() => {
     if (isVisible) {
-      let v = 0, a = 50, p = 0, e = 0;
+      let v = 0, a = 0, p = 0, e = 0;
       const interval = setInterval(() => {
-        if (v < 10) setVideos(++v);
-        if (a < 80) setArticles(++a);
-        if (p < 7) setPodcasts(++p);
-        if (e < 20) setEbooks(++e);
-        if (v >= 10 && a >= 120 && p >= 7 && e >= 20) clearInterval(interval);
-      }, 80);
+        if (v < target.videos) setVideos(++v);
+        if (a < target.articles) setArticles(++a);
+        if (p < target.podcasts) setPodcasts(++p);
+        if (e < target.ebooks) setEbooks(++e);
+
+        if (v >= target.videos && a >= target.articles && p >= target.podcasts && e >= target.ebooks) {
+          clearInterval(interval);
+        }
+      }, 80); // speed
     }
-  }, [isVisible]);
+  }, [isVisible, target]);
 
   return (
     <div ref={ref} className="info">
@@ -55,11 +92,40 @@ function ChangeNumbers({ children }) {
   );
 }
 
+
 // ------------------- Home Page -------------------
 function Home() {
   const SearchInput = useRef();
   const [SearchOutput, setSearchOutput] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+
+
+  function SaveUserInfo() {
+    useEffect(() => {
+      const saveUserInfo = async () => {
+        try {
+          const deviceInfo = navigator.userAgent; // get device/browser details
+          const safeId = deviceInfo.replace(/[^a-zA-Z0-9]/g, "_"); // Firestore doc IDs can't have special chars
+
+          const userData = {
+            device: deviceInfo,
+            timestamp: new Date().toISOString(),
+          };
+
+          // Use device as doc ID (no duplicates)
+          await setDoc(doc(db, "users", safeId), userData, { merge: true });
+          console.log("✅ User info saved/updated:", userData);
+        } catch (error) {
+          console.error("❌ Error saving user info:", error);
+        }
+      };
+
+      saveUserInfo();
+    }, []); // ✅ runs only once
+
+    return null;
+  }
+  SaveUserInfo()
   
   // Trigger search on Enter key
   const Search = (e) => {
@@ -111,7 +177,7 @@ function Home() {
     <>
       {/* -------- Header Section -------- */}
       <header>
-        <img src={require('../requiredIMG/cyber.png')} alt="Cyber Security" />
+        <img src={require('../requiredIMG/cyber.png')} id='logo' alt="Cyber Security" />
         <input
           id="searchBox"
           type="text"
@@ -166,6 +232,7 @@ function Home() {
 
 // ------------------- Intro Section -------------------
 function IntroSection() {
+  const navTo=useNavigate()
   return (
     <>
       <div className="intro">
@@ -252,13 +319,33 @@ function IntroSection() {
       </div>
 
       {/* Contact Section */}
-      <div className="contact">
-        <div className="contactContainer">
-          <h2>Get in Touch</h2>
-          <p>Have questions or need support? Reach out to us and we'll respond promptly.</p>
-          <a href="contact" className="button">Contact Us</a>
+  
+      <div className='footer'>
+          <div>
+            <img src={require('../requiredIMG/cyber.png')} id='logo1' alt="Cyber Security" />
+            <p>A cybersecurity awareness platform that educates and empowers users<br/> to stay safe online</p>
+          </div>
+          <div>
+            <h3>Our policy to provide</h3>
+            <p>information About Cybersecurity</p>
+            <p>Cybersecurity Best Practices</p>
+            <p>Latest Security Updates</p>
+            <p>Free Learning Resources</p>
+          </div>
+          <div className='link'>
+            <h3>important links</h3>
+            <p onClick={() => navTo("/")}>Home</p>
+            <p onClick={() => navTo("/About")}>About</p>
+            <p onClick={() => navTo("/courses")}>Courses</p>
+            <p onClick={() => navTo("/contact")}>Contact</p>
+          </div>
+          <div>
+            <h3>Address</h3>
+            <p>CyberSafe Solutions 123, Cyber Tower,<br/> Baner-Pashan Link Road, Pune, Maharashtra 411045, India</p>
+            <p><b>Email:</b>info@cybersafe.com</p>
+            <p><b>Phone</b>+91 78220 10159</p>
+          </div>
         </div>
-      </div>
     </>
   );
 }

@@ -107,6 +107,17 @@ function Home() {
   return (
     <>
       {/* -------- Header Section -------- */}
+      <div style={{
+        backgroundColor: '#ffcc00',
+        color: '#000',
+        padding: '10px',
+        textAlign: 'center',
+        fontWeight: 'bold'
+      }}>
+        ⚠ This website is for educational purposes only.  
+        All examples are for cybersecurity awareness.  
+        No real passwords, credentials, or downloads are provided.
+      </div>
       <header>
         <img src={require('../requiredIMG/cyber.png')} alt="Cyber Security" id='logo'/>
         <input

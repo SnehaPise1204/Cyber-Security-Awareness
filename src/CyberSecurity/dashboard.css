@@ -1,0 +1,158 @@
+/* General */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f4f6f9;
+  color: #222;
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #0f172a;
+  color: #fff;
+  padding: 25px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo span {
+  color: #3b82f6;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 12px 15px;
+  margin: 10px 0;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu li:hover,
+.menu li.active {
+  background: #1e293b;
+  color: #3b82f6;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 25px;
+  background: #f4f6f9;
+  overflow-y: auto;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.topbar h1 {
+  font-size: 22px;
+  color: #111;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile img {
+  border-radius: 50%;
+}
+
+/* Watched Section */
+.watched-section h2,
+.recommend-section h2 {
+  margin-bottom: 15px;
+}
+
+.watched-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.watched-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.watched-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Recommendations */
+.recommend-list {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.recommend-card {
+  min-width: 200px;
+  background: #fff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  transition: 0.3s;
+}
+
+.recommend-card:hover {
+  background: #f9fafb;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    padding: 15px;
+  }
+  .topbar h1 {
+    font-size: 18px;
+  }
+}

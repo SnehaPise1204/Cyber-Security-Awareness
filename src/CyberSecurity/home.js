@@ -1,59 +1,23 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, Routes, Route,useNavigate } from 'react-router-dom';
 
 import db from "../firebase";
-import { collection, query, where, getDocs,doc,setDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
-import About from "./About";
-import Contact from "./contact";
-import CoursesPage from './courses';
 import "./style.css";
 import "./responsive.css";
 import FadeInSection from "./fadeIn";
 
-// ------------------- Animated Numbers -------------------
 
- 
-
-
-function ChangeNumbers() {
+function ChangeNumbers({ children }) {
   const ref = useRef();
   const [isVisible, setVisible] = useState(false);
-
-  // Animated values
   const [videos, setVideos] = useState(0);
   const [articles, setArticles] = useState(0);
   const [podcasts, setPodcasts] = useState(0);
   const [ebooks, setEbooks] = useState(0);
+  
 
-  // Final target values from Firestore
-  const [target, setTarget] = useState({
-    videos: 0,
-    articles: 0,
-    podcasts: 0,
-    ebooks: 0,
-  });
-
-  // Fetch counts once from Firestore
-  useEffect(() => {
-    const fetchCounts = async () => {
-      const videosSnap = await getDocs(collection(db, "Videos"));   
-      const articlesSnap = await getDocs(collection(db, "Articles")); 
-      const podcastsSnap = await getDocs(collection(db, "podcasts")); 
-      const ebooksSnap = await getDocs(collection(db, "eBooks")); 
-
-      setTarget({
-        videos: videosSnap.size,
-        articles: articlesSnap.size,
-        podcasts: podcastsSnap.size,
-        ebooks: ebooksSnap.size,
-      });
-    };
-
-    fetchCounts();
-  }, []);
-
-  // Observer to trigger animation
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => setVisible(entry.isIntersecting));
@@ -62,22 +26,18 @@ function ChangeNumbers() {
     return () => observer.disconnect();
   }, []);
 
-  // Animate numbers just like your code
   useEffect(() => {
     if (isVisible) {
-      let v = 0, a = 0, p = 0, e = 0;
+      let v = 0, a = 50, p = 0, e = 0;
       const interval = setInterval(() => {
-        if (v < target.videos) setVideos(++v);
-        if (a < target.articles) setArticles(++a);
-        if (p < target.podcasts) setPodcasts(++p);
-        if (e < target.ebooks) setEbooks(++e);
-
-        if (v >= target.videos && a >= target.articles && p >= target.podcasts && e >= target.ebooks) {
-          clearInterval(interval);
-        }
-      }, 80); // speed
+        if (v < 10) setVideos(++v);
+        if (a < 80) setArticles(++a);
+        if (p < 7) setPodcasts(++p);
+        if (e < 20) setEbooks(++e);
+        if (v >= 10 && a >= 120 && p >= 7 && e >= 20) clearInterval(interval);
+      }, 80);
     }
-  }, [isVisible, target]);
+  }, [isVisible]);
 
   return (
     <div ref={ref} className="info">
@@ -92,40 +52,11 @@ function ChangeNumbers() {
   );
 }
 
-
 // ------------------- Home Page -------------------
 function Home() {
   const SearchInput = useRef();
   const [SearchOutput, setSearchOutput] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-
-
-  function SaveUserInfo() {
-    useEffect(() => {
-      const saveUserInfo = async () => {
-        try {
-          const deviceInfo = navigator.userAgent; // get device/browser details
-          const safeId = deviceInfo.replace(/[^a-zA-Z0-9]/g, "_"); // Firestore doc IDs can't have special chars
-
-          const userData = {
-            device: deviceInfo,
-            timestamp: new Date().toISOString(),
-          };
-
-          // Use device as doc ID (no duplicates)
-          await setDoc(doc(db, "users", safeId), userData, { merge: true });
-          console.log("✅ User info saved/updated:", userData);
-        } catch (error) {
-          console.error("❌ Error saving user info:", error);
-        }
-      };
-
-      saveUserInfo();
-    }, []); // ✅ runs only once
-
-    return null;
-  }
-  SaveUserInfo()
   
   // Trigger search on Enter key
   const Search = (e) => {
@@ -177,7 +108,7 @@ function Home() {
     <>
       {/* -------- Header Section -------- */}
       <header>
-        <img src={require('../requiredIMG/cyber.png')} id='logo' alt="Cyber Security" />
+        <img src={require('../requiredIMG/cyber.png')} alt="Cyber Security" id='logo'/>
         <input
           id="searchBox"
           type="text"
@@ -192,6 +123,9 @@ function Home() {
           <Link to="/contact">Contact</Link>
         </nav>
       </header>
+      <Routes>
+        <Route path="/" element={<IntroSection />} />
+      </Routes>
 
       {/* -------- Popup Search Results -------- */}
       {showPopup && (
@@ -218,14 +152,7 @@ function Home() {
           </div>
         </div>
       )}
-
-      {/* -------- Routes -------- */}
-      <Routes>
-        <Route path="/" element={<IntroSection />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/courses" element={<CoursesPage />} />
-      </Routes>
+      
     </>
   );
 }
@@ -318,8 +245,6 @@ function IntroSection() {
         </div>
       </div>
 
-      {/* Contact Section */}
-  
       <div className='footer'>
           <div>
             <img src={require('../requiredIMG/cyber.png')} id='logo1' alt="Cyber Security" />
@@ -350,4 +275,5 @@ function IntroSection() {
   );
 }
 
-export default Home;
+export default Home; 
+

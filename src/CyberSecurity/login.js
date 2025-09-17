@@ -1,46 +1,54 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 
-import db from "../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { auth } from "../firebase";
 
 export default function Login() {
-  let uname = useRef();
-  let upass = useRef();
-  let navTo = useNavigate();
+  const uname = useRef();
+  const upass = useRef();
+  const navTo = useNavigate();
+  const auth = getAuth();
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const checkLogin = async (e) => {
-    e.preventDefault(); // ✅ stops form from reloading
-    try {
-      const colRef = collection(db, "LoginUsers");
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-      // ✅ Correct Firestore query (match both email & password)
-      const q = query(
-        colRef,
-        where("name", "==", uname.current.value),
-        where("pass", "==", upass.current.value)
+    try {
+      // ✅ Firebase Auth login
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        uname.current.value,
+        upass.current.value
       );
 
-      const snapshot = await getDocs(q);
+      const user = userCredential.user;
 
-      if (!snapshot.empty) {
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.profile === "admin") {
-            navTo("/admin");
-          } else if (data.profile === "user") {
-            navTo("/user");
-          } else {
-            alert("Unknown profile role");
-          }
-        });
+      // ✅ Fetch extra profile info from Firestore (if needed)
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+
+        if (userData.profile === "admin") {
+          navTo("/admin");
+        } else {
+          navTo("/user");
+        }
       } else {
-        alert("User not registered");
+        // If no profile doc exists, default to user
+        navTo("/user");
       }
-    } catch (e) {
-      alert(`Error: ${e.message}`);
+    } catch (err) {
+      setError("❌ " + err.message);
     }
+    setLoading(false);
   };
 
   return (
@@ -68,15 +76,17 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="auth-btn">
-            Login
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <p className="auth-link">
-            Don’t have an account?{" "}
-            <span
-              style={{ color: "#003dc0", cursor: "pointer" }}
-              onClick={() => navTo("/About")} // ✅ works now
+            Don't have an account?{" "}
+            <span 
+              style={{ cursor: "pointer", color: "#003dc0" }}
+              onClick={() => navTo("/register")}
             >
               Register
             </span>

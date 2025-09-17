@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import db from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
-import { Star } from "lucide-react"; // for star icon
+import { db } from "../firebase";
+import { collection, getDocs, query, where, addDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { Star } from "lucide-react";
 import "./courses.css";
 
 function CoursesPage() {
@@ -11,7 +12,8 @@ function CoursesPage() {
   const [podcasts, setPodcasts] = useState([]);
   const [activeTab, setActiveTab] = useState("articles");
 
-  
+  const auth = getAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +52,45 @@ function CoursesPage() {
     }
   };
 
+  // save/update material when user clicks
+  const handleViewMaterial = async (item, type) => {
+    const user = auth.currentUser;
+    if (!user) {
+      return;
+    }
+
+    try {
+      const reviewedRef = collection(db, "users", user.uid, "reviewedMaterials");
+
+      // check if material already exists
+      const q = query(reviewedRef, where("url", "==", item.url));
+      const existingSnap = await getDocs(q);
+
+      if (!existingSnap.empty) {
+        // update lastViewed
+        const existingDoc = existingSnap.docs[0];
+        await updateDoc(existingDoc.ref, {
+          lastViewed: new Date().toLocaleString(),
+          timestamp: serverTimestamp(),
+        });
+        console.log("Updated material:", item.name);
+      } else {
+        // add new material
+        await addDoc(reviewedRef, {
+          title: item.name,
+          url: item.url,
+          type: type,
+          by: item.by || "Unknown",
+          lastViewed: new Date().toLocaleString(),
+          timestamp: serverTimestamp(),
+        });
+        console.log("Saved new material:", item.name);
+      }
+    } catch (error) {
+      console.error("Error saving material:", error);
+    }
+  };
+
   const renderContent = () => {
     const { label, items } = getActiveItems();
 
@@ -65,8 +106,19 @@ function CoursesPage() {
                 <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
               )}
             </h3>
-            <a href={item.url} target="_blank" rel="noreferrer">
-              {label === "Videos" ? "Watch Video" : label === "Articles" ? "Read Article" : label === "Handbooks" ? "Read Handbook": "Listen Podcast"}
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => handleViewMaterial(item, label)}
+            >
+              {label === "Videos"
+                ? "Watch Video"
+                : label === "Articles"
+                ? "Read Article"
+                : label === "Handbooks"
+                ? "Read Handbook"
+                : "Listen Podcast"}
             </a>
           </div>
         ))}
@@ -81,10 +133,30 @@ function CoursesPage() {
 
       {/* Navbar */}
       <div className="navbar-buttons">
-        <button className={activeTab === "articles" ? "active" : ""} onClick={() => setActiveTab("articles")}>Articles</button>
-        <button className={activeTab === "videos" ? "active" : ""} onClick={() => setActiveTab("videos")}>Videos</button>
-        <button className={activeTab === "handbooks" ? "active" : ""} onClick={() => setActiveTab("handbooks")}>Handbooks</button>
-        <button className={activeTab === "podcasts" ? "active" : ""} onClick={() => setActiveTab("podcasts")}>Podcasts</button>
+        <button
+          className={activeTab === "articles" ? "active" : ""}
+          onClick={() => setActiveTab("articles")}
+        >
+          Articles
+        </button>
+        <button
+          className={activeTab === "videos" ? "active" : ""}
+          onClick={() => setActiveTab("videos")}
+        >
+          Videos
+        </button>
+        <button
+          className={activeTab === "handbooks" ? "active" : ""}
+          onClick={() => setActiveTab("handbooks")}
+        >
+          Handbooks
+        </button>
+        <button
+          className={activeTab === "podcasts" ? "active" : ""}
+          onClick={() => setActiveTab("podcasts")}
+        >
+          Podcasts
+        </button>
       </div>
 
       <div className="section">{renderContent()}</div>

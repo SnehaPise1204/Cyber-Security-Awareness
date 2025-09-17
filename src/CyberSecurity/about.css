@@ -55,9 +55,12 @@
 }
 
 .WhoWeAre img {
+  z-index: 100;
   width: 500px;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  
 }
 /* =========Table Division========= */
 
@@ -178,7 +181,7 @@ tbody tr:last-child {
   outline: none;
 }
 
-button {
+/* button {
   background: linear-gradient(135deg, #4a90e2, #357abd);
   color: white;
   padding: 15px 30px;
@@ -192,7 +195,7 @@ button {
 button:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
-}
+} */
 
 .contact-info {
   display: flex;

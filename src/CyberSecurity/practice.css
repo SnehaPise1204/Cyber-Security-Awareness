@@ -1,0 +1,134 @@
+/* ------------ Global ------------ */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  margin: 0;
+  padding: 0;
+}
+
+.cyber-hub {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 90px;
+}
+
+/* ------------ Layout ------------ */
+.cy-main {
+  display: flex;
+  width: 90%;
+  max-width: 1100px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.cy-side {
+  width: 280px;
+  background: #f1f5f9;
+  padding: 20px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.cy-side h2 {
+  margin-bottom: 10px;
+  color: #1d4ed8;
+}
+
+.cy-side p {
+  font-size: 14px;
+  color: #475569;
+}
+
+.cy-card {
+  flex: 1;
+  padding: 30px;
+  min-height: 400px;
+}
+
+/* ------------ Quick Actions Buttons ------------ */
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cy-action {
+  background: #3b82f6;
+  border: none;
+  color: #ffffff;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.cy-action:hover {
+  background: #2563eb;
+}
+
+/* ------------ Input ------------ */
+.cy-input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #1e293b;
+}
+
+.cy-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
+
+/* ------------ Lists ------------ */
+.cy-list {
+  margin-top: 15px;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.cy-list li {
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+/* ------------ Strength Indicator ------------ */
+.strength {
+  font-weight: bold;
+  margin-top: 6px;
+  color: #d97706;
+}
+
+/* ------------ Quiz Buttons ------------ */
+.quiz-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.quiz-buttons .cy-action {
+  flex: 1;
+  text-align: center;
+}
+
+/* ------------ Tip Box ------------ */
+.tip {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #166534;
+  background: #dcfce7;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #86efac;
+}

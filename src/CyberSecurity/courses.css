@@ -5,6 +5,7 @@
   padding: 2px;
   font-family: "Hind", sans-serif;
   color: #1a1a1a;
+  text-align: center;
 }
 
 /* Titles */
@@ -31,8 +32,9 @@
   padding:9px 20px;
   width: 25vw;
   background: transparent;
+  border: 10px;
   color: #212121;
-  border-radius: 0px;
+  border-radius: 5px;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.25s ease-in-out;
@@ -159,5 +161,8 @@
 @media (max-width: 480px) {
   .courses-container {
     padding: 0 10px;
+  }
+  .page-title{
+    padding-top: 20px;
   }
 }

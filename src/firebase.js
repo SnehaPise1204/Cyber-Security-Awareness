@@ -1,8 +1,9 @@
-// Import the functions you need from the SDKs
+// Import Firebase modules
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyD8JmtEakrUlaUJM9MlyHQn0Afn75aMEio",
   authDomain: "cybersecurityweb-3ae81.firebaseapp.com",
@@ -15,7 +16,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore
-const db = getFirestore(app);
-
-export default db;
+// Export named instances
+export const auth = getAuth(app);
+export const db = getFirestore(app);

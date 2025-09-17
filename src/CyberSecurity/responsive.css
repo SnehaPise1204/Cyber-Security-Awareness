@@ -43,6 +43,16 @@
     padding: 25px 15px;
   }
 
+  .footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  background: #0d1b2a; /* Dark navy */
+  color: #f1f1f1;
+  padding: 30px 50px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 }
 
 
@@ -179,18 +189,26 @@
 
 
 @media (max-width: 400px) {
+  .IntroDescription{
+    padding: 20px;
+  }
+  
   header img {
-    width: 140px;
-    height: auto;
-    padding-left: 10px;
+    width: 40px;
+    height: 100px;
+    padding-left: 2px;
     padding-right: 0px;
   }
 
+  header img {
+    padding: 0;
+  }
   .nav-links {
-    margin-left: 13px;
+    display: none;
+    /* margin-left: 13px;
     padding-left: 0px;
     gap: 10px;
-    justify-content: center;
+    justify-content: center; */
   }
 
   .nav-links a:nth-child(1){

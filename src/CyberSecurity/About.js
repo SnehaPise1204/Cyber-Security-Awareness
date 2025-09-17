@@ -24,10 +24,7 @@ function About() {
       </div>
 
       <div className="WhoWeAre">
-        <img
-          src="https://static.vecteezy.com/system/resources/thumbnails/047/407/854/small/group-of-cheerful-businesspeople-with-leader-in-front-free-photo.jpg"
-          alt="Cyber Security"
-        />
+        <img src={require('../requiredIMG/WhoWeAre.jpg')} alt="Cyber Security" />
         <FadeInSection>
           <h1>Who We Are</h1>
           <p>

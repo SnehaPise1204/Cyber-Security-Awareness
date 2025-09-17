@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import {useNavigate } from 'react-router-dom';
 import "./about.css";
-import db from "../firebase";
+import { db } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 
 function Contact() {

@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link, Routes, Route,useNavigate } from 'react-router-dom';
 
-import db from "../firebase";
+import { db } from "../firebase";
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import "./style.css";
 import "./responsive.css";
@@ -57,12 +58,22 @@ function Home() {
   const SearchInput = useRef();
   const [SearchOutput, setSearchOutput] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  
-  // Trigger search on Enter key
+  const [user, setUser] = useState(null); // Track user
+  const auth = getAuth();
+  const navigate = useNavigate();
+
+  // Track authentication state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser ? currentUser : null);
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+
+  // Search trigger on Enter
   const Search = (e) => {
-    if (e.key === "Enter") {
-      HandleSearch();
-    }
+    if (e.key === "Enter") HandleSearch();
   };
 
   // Search function
@@ -93,11 +104,7 @@ function Home() {
 
       setSearchOutput(allResults);
       setShowPopup(true);
-
-      if (allResults.length === 0) {
-        alert("No results found!");
-      }
-
+      if (allResults.length === 0) alert("No results found!");
     } catch (e) {
       console.log("Error:", e);
       alert("Error, Please try again...!");
@@ -106,18 +113,7 @@ function Home() {
 
   return (
     <>
-      {/* -------- Header Section -------- */}
-      <div style={{
-        backgroundColor: '#ffcc00',
-        color: '#000',
-        padding: '10px',
-        textAlign: 'center',
-        fontWeight: 'bold'
-      }}>
-        ⚠ This website is for educational purposes only.  
-        All examples are for cybersecurity awareness.  
-        No real passwords, credentials, or downloads are provided.
-      </div>
+      {/* Header */}
       <header>
         <img src={require('../requiredIMG/cyber.png')} alt="Cyber Security" id='logo'/>
         <input
@@ -130,15 +126,27 @@ function Home() {
         <nav className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/courses">Courses</Link>
+          <Link to="/practice">Practice</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
         </nav>
+        {!user ? (
+            <button className="login-btn" onClick={() => navigate("/login")}>
+              Login
+            </button>
+          ) : (
+            <div className="avatar">
+              <span onClick={() => navigate("/user")}>{user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}</span>
+            </div>
+          )}
       </header>
+
+      {/* Routes */}
       <Routes>
         <Route path="/" element={<IntroSection />} />
       </Routes>
 
-      {/* -------- Popup Search Results -------- */}
+      {/* Search Popup */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup">
@@ -146,27 +154,26 @@ function Home() {
             {SearchOutput.length > 0 ? (
               SearchOutput.map((item) => (
                 <div key={item.id} className="result-item">
-                  <p>
-                    <strong>{item.collection}</strong>: {item.name}</p>
-                    <div>
-                      <a href={item.url} target='_blank' rel="noreferrer" className='popUpBtn'>Open</a>
-                      <button className='popUpBtn' onClick={() => setShowPopup(false)}>Close</button>
-                    </div>
-                    
+                  <p><strong>{item.collection}</strong>: {item.name}</p>
+                  <div>
+                    <a href={item.url} target='_blank' rel="noreferrer" className='popUpBtn'>Open</a>
+                    <button className='popUpBtn' onClick={() => setShowPopup(false)}>Close</button>
+                  </div>
                 </div>
               ))
-            ) : (<div>
-                  <p>No results found.</p>
-                  <button onClick={() => setShowPopup(false)}>Close</button>
+            ) : (
+              <div>
+                <p>No results found.</p>
+                <button onClick={() => setShowPopup(false)}>Close</button>
               </div>
             )}
           </div>
         </div>
       )}
-      
     </>
   );
 }
+
 
 // ------------------- Intro Section -------------------
 function IntroSection() {
@@ -220,10 +227,7 @@ function IntroSection() {
             transform cybersecurity awareness into everyday habits.
           </p>
         </FadeInSection>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTivgRv8QMx31UOsXxnxwF1BsCZ96A281UEwg&s"
-          alt="Cyber Security"
-        />
+        <img src={require('../requiredIMG/missonHome.jpeg')} alt="Cyber Security" />
       </div>
 
       {/* Numbers Section */}
